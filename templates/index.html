@@ -1,0 +1,72 @@
+$def with (results, q)
+
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Search MODS</title>
+  <link rel="stylesheet" type="text/css" href="http://people.umass.edu/arubinst/mods-search/js/tablesorter/themes/blue/style.css" />
+  <link rel="stylesheet" type="text/css" href="http://people.umass.edu/arubinst/mods-search/styles/screen.css" />
+  <script type="text/javascript" src="http://people.umass.edu/arubinst/mods-search/js/jquery.js"></script> 
+  <script type="text/javascript" src="http://people.umass.edu/arubinst/mods-search/js/tablesorter/jquery.tablesorter.js"></script> 
+  <script type="text/javascript">
+	$$(document).ready(function() { 
+        $$("#resultlist").tablesorter( {sortList: [[0,0]]}); 
+      });
+  </script>
+
+</head>
+<body>
+
+<div id="header">
+ <a href="http://localhost:8080"><img src="http://people.umass.edu/arubinst/mods-search/images/dubois_head_icon.png" style="float:left;" border="0" /></a>
+<div id="searchbox">
+  <form name="input" method="GET">
+    <input class="search" type="text" name="q" /><br />
+    <select class="select" name="field">
+      <option value="full">Keyword</option>
+      <option value="title">Title</option>
+      <option value="abs">Abstract</option>
+      <option value="creator">Creator</option>
+      <option value="names">Names</option>
+    </select>
+   <p><input class="button" type="submit" value="Go" /></p>
+  </form>
+</div>
+</div>
+
+
+
+$if q:
+  <div id="results">
+    $if results:
+ 
+       <p class="message" style="font-size:1.0em;">You searched for <span style="font-size:1.3em;">$q</span> and found <span style="font-size:1.3em;">$len(results)</span> records</p>
+      
+       <table id="resultlist" class="tablesorter">
+	 <thead>
+	   <tr>
+             <th>Item Number</th>
+             <th>Title</th>
+             <th>Creator</th>
+	   </tr>
+	 </thead>
+       <tbody>
+        $for record in results:
+          <tr>
+            <td><a href="/$record[0]">$record[0]</a></td>
+            <td>$record[1]</td>
+            <td>$record[2]</td>
+	  </tr>
+
+      </tbody>
+      </table>
+
+   $else:
+
+     <p class="message">Sorry, nothing doing...  Try somethin' else</p>
+
+  </div>
+
+</body>
+</html>
